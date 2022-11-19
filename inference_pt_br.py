@@ -25,7 +25,7 @@ def load_translation_models(translation_model_id, access_token):
     return tokenizer, text_model
 
 
-def pipeline_generate(diffusion_model_id, access_token, prompt):
+def pipeline_generate(diffusion_model_id, access_token):
     pipe = StableDiffusionPipeline.from_pretrained(
         diffusion_model_id,
         use_auth_token=access_token
@@ -84,8 +84,8 @@ def main(**kwargs):
         translation_model_id, access_token
     )
     prompt_en = translate(prompt, tokenizer, text_model)
-    pipe = pipeline_generate(diffusion_model_id, access_token, prompt_en)
-    image = generate_image(pipe, prompt)
+    pipe = pipeline_generate(diffusion_model_id, access_token)
+    image = generate_image(pipe, prompt_en)
     image.save(output_path / "inference.png")
 
 
